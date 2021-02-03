@@ -2,20 +2,16 @@ import java.awt.Graphics;
 import java.awt.event.*;
 import javax.swing.JPanel;
 /**
- * Write a description of class Button here.
+ * Just an abstract button so that I can use the close button in full screen
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author (Nicholas Sullivan)
+ * @version (Jan 2016)
  */
 public abstract class Button implements MouseListener
 {
-    // instance variables - replace the example below with your own
     protected JPanel panel;
     protected int x, y, w, h;
 
-    /**
-     * Constructor for objects of class Button
-     */
     public Button(int x, int y, int w, int h, JPanel panel)
     {
         this.panel = panel;

@@ -22,8 +22,9 @@ public enum Value
     queen(0xd, "queen", 10),
     king(0xe, "king", 10);
     // Defines hexadecimal code for unicode characters and the value of the card
-    private int code, value;
-    private String valueName;
+    private final int code;
+    private final int value;
+    private final String valueName;
     // Defines the code, value and name of each card
     Value(int c, String s, int val)
     {

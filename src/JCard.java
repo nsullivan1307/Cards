@@ -9,8 +9,8 @@ import java.awt.*;
 public class JCard extends DragBox
 {
     // This is the card that is drawn
-    private Card c1;
-    private CardTable cardPanel;
+    private final Card c1;
+
     public JCard(Card card1, int xPos, int yPos, JPanel panel)
     {
         // Sets the position of the drag box
@@ -22,11 +22,10 @@ public class JCard extends DragBox
         addTo(panel);
         // sets the value of the card
         c1 = card1;
-        cardPanel = (CardTable) panel;
     }
     public void draw(Graphics page)
     {
-        // This is the background of the card, a white rectagle
+        // This is the background of the card, a white rectangle
         page.setColor(Color.white);
         page.fillRect(x, y, w, h);
         // if the suit is hearts or diamonds, set the color to red, otherwise black

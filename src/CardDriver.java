@@ -10,6 +10,6 @@ public class CardDriver
     public static void main(String[] args)
     {
         // Make a new CardFrame
-        CardFrame frame = new CardFrame();
+        new CardFrame();
     }
 }

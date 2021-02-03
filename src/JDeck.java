@@ -1,6 +1,7 @@
-import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 /**
  * This is the visual representation of the deck. When clicked, a card appears below it.
  *
@@ -10,15 +11,17 @@ import java.awt.event.*;
 public class JDeck
 {
     // This is the x and y positions, the width and height of the deck
-    private int x, y, w, h;
+    private final int x;
+    private final int y;
+    private final int w;
+    private final int h;
     // This will be the string with the character of the back of a card
-    private String cardPic;
+    private final String cardPic;
     // Deck that the JDeck uses
-    private Deck d1;
+    private final Deck d1;
     // The cardTable panel
-    private CardTable p;
-    // The point of the mouse, used to determine whether the mouse is over the deck
-    private Point point1;
+    private final CardTable p;
+
     public JDeck(int xp, int yp, CardTable panel)
     {
         // xp and yp are the x and y positions of the deck
@@ -36,7 +39,7 @@ public class JDeck
         // It is used so that the mouse clicked position can be detected, within
         // the JPanel
         p = panel;
-        // This adds a mouselistener to the JPanel, which detects where and
+        // This adds a MouseListener to the JPanel, which detects where and
         // how a mouse has clicked in the JPanel
         p.addMouseListener(new clickListener());
     }
@@ -58,7 +61,8 @@ public class JDeck
         public void mouseClicked(MouseEvent event)
         {
             // Get the point that the mouse has been clicked
-            point1 = event.getPoint();
+            // The point of the mouse, used to determine whether the mouse is over the deck
+            Point point1 = event.getPoint();
             int xp = point1.x;
             int yp = point1.y;
             // If the point has been clicked is within the bounds of the drawn deck:

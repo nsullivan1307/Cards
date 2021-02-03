@@ -9,16 +9,12 @@ import java.util.Random;
 public class Deck
 {
     // A card array to represent the deck
-    private Card[] d1;
-    // An array of suits and an array of values to create the cards in the deck
-    private Suit[] suits = Suit.values();
-    private Value[] values = Value.values();
+    private final Card[] d1;
     // a random generator
-    private Random gen;
+    private final Random gen;
     // The number of cards
     private int numCards;
-    // the card for remove from the deck
-    private Card cardOut;
+
     public Deck()
     {
         // the number of cards is 52
@@ -30,6 +26,9 @@ public class Deck
         {
             for (int j = 0; j < 13; j++)
             {
+                // An array of suits and an array of values to create the cards in the deck
+                Suit[] suits = Suit.values();
+                Value[] values = Value.values();
                 d1[13*i+j] = new Card(suits[i], values[j]);
             }
         }
@@ -42,13 +41,11 @@ public class Deck
         // generates an index for the card
         int index = gen.nextInt(numCards);
         // creates the card to be removed
-        cardOut = d1[index];
+        // the card for remove from the deck
+        Card cardOut = d1[index];
         // for each value in the deck after the card to be taken out,
         // shift each value down one index
-        for (int i = index; i < numCards-1; i++)
-        {
-            d1[i] = d1[i+1];
-        }
+        if (numCards - 1 - index >= 0) System.arraycopy(d1, index + 1, d1, index, numCards - 1 - index);
         // Decreases the number of cards
         numCards--;
         // returns the card

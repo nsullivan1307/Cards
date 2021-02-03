@@ -14,8 +14,8 @@ public enum Suit
     diamonds(0x1f0c0, "diamonds"),
     clubs(0x1f0d0, "clubs");
     // code is a hexadecimal integer, used for representing Unicode characters
-    private int code;
-    private String suitName;
+    private final int code;
+    private final String suitName;
     // defines code and suitName
     Suit(int c, String s)
     {

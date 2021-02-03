@@ -15,7 +15,7 @@ public class DragBox
     protected int x, y, w, h;
     // The panel that the DragBox is put into.
     protected JPanel p;
-    // The Point wher the mouse currently is (defined later)
+    // The Point where the mouse currently is (defined later)
     private Point point1;
     // x and y positions of the mouse, and the x and y positions relative to the top left corner
     private int xp, yp, xRel, yRel;

@@ -1,6 +1,6 @@
 
 /**
- * This combines the suit and value to form a card. When printed, it draws the unicode characted of the
+ * This combines the suit and value to form a card. When printed, it draws the unicode character of the
  * card
  *
  * @author (Nicholas Sullivan)
@@ -9,7 +9,7 @@
 public class Card
 {
     // cardPic is the unicode character of the card
-    private String cardPic;
+    private final String cardPic;
     // The suit and value of the card
     public final Suit SUIT;
     public final Value CARD_NAME;
