@@ -21,7 +21,7 @@ public class CardFrame extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // creates a new Card Table with this CardFrame as a parameter, so that it
         // can call the reset method later
-        t1 = new CardTable();
+        t1 = new CardTable(this);
         // the Card table is added to the JFrame, it is packed, and it is set visible
         setUndecorated(true);
         getContentPane().add(t1);
@@ -38,7 +38,7 @@ public class CardFrame extends JFrame
         // the CardTable as we know it is removed from the JFrame
         getContentPane().remove(t1);
         // A new CardTable is created and added to the JFrame, and is packed
-        t1 = new CardTable();
+        t1 = new CardTable(this);
         getContentPane().add(t1);
         pack();
     }

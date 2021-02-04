@@ -1,4 +1,4 @@
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 /**
@@ -21,12 +21,15 @@ public class CardTable extends JPanel
     private JCard[] jCards;
     // numCards is the number of cards on the JPanel, and sum is the sum of the cards
     private int numCards;
+    private final CardFrame frame;
     // This is the Screen size of the computer. SCALE is created to be used by other classes
     // such as JCard1 and JDeck to draw the cards and decks at the appropriate size for the screen
     public static final Dimension SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
     public static final int SCALE = (int)SCREEN.getHeight()/320;
-    private final CloseButton c;
-    public CardTable()
+    private final JButton reset, exit;
+    private ButtonListener listener;
+
+    public CardTable(CardFrame frame)
     {
         // A new JDeck is created. This card table is passed to it in order for it to determine
         // the position of a mouse clicked. The position is scaled, and positioned
@@ -43,11 +46,19 @@ public class CardTable extends JPanel
         f1 = new Font("Arial", Font.PLAIN, 10*SCALE);
         // f2 is the font of the playing cards, which needs to be a special font to display
         f2 = new Font("Segoe UI Symbol", Font.PLAIN, 60*SCALE);
+        // Reset and exit buttons
+        listener = new ButtonListener();
+        reset = createSimpleButton("Reset", f1);
+        reset.addActionListener(listener);
+        exit = createSimpleButton("Exit", f1);
+        exit.addActionListener(listener);
+        add(reset);
+        add(exit);
         // The preferred screen size is the whole screen
         setPreferredSize(SCREEN);
         // the frame is set to the parameter passed in
+        this.frame = frame;
         // This is the CardFrame, used for resetting the CardTable.
-        c = new CloseButton(this);
     }
     // This adds a card to the JPanel
     public void addCard(Card ca1)
@@ -92,7 +103,6 @@ public class CardTable extends JPanel
         {
             jCards[i].draw(page);
         }
-        c.draw(page);
         // Sets the graphics font to the font used for the message
         //page.setFont(f1);
         // Sets the color to black, because the colour might have changed, in drawing the cards
@@ -102,42 +112,40 @@ public class CardTable extends JPanel
         // Draws the point display at the top of the screen with scaled positions
         //page.drawString(message, 40*SCALE, 20*SCALE);
     }
-    private class CloseButton extends Button
+
+    public CardFrame getFrame()
     {
-        public CloseButton(CardTable table)
+        return frame;
+    }
+
+    private static JButton createSimpleButton(String text, Font font) {
+        JButton button = new JButton(text);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setContentAreaFilled(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setFont(font);
+        button.setForeground(new Color(255, 255, 255, 255));
+        return button;
+    }
+
+    private class ButtonListener implements ActionListener
+    {
+        public ButtonListener()
         {
-            super(SCREEN.width - (10 * SCALE), 0, 10*SCALE, 10*SCALE, table);
+
         }
-        public void draw(Graphics page)
+
+        public void actionPerformed(ActionEvent e)
         {
-            page.setColor(new Color(255, 255, 255));
-            page.setFont(f1);
-            page.drawString("X", x+2*SCALE, y+8*SCALE);
-        }
-        public void mouseClicked(MouseEvent e)
-        {
-            int xPos = e.getX();
-            int yPos = e.getY();
-            if (xPos > x && xPos < x + w && yPos > y && yPos < y + h)
+            if (e.getSource() == reset)
+            {
+                frame.reset();
+            }
+            if (e.getSource() == exit)
             {
                 System.exit(0);
             }
-        }
-        public void mousePressed(MouseEvent e)
-        {
-            int xPos = e.getX();
-            int yPos = e.getY();
-            if (xPos > x && xPos < x + w && yPos > y && yPos < y + h)
-            {
-                Graphics page = panel.getGraphics();
-                page.setColor(new Color(255, 255, 255));
-                page.fillRect(x, y, w, h);
-                page.setColor(Color.red);
-                page.setFont(f1);
-                page.drawString("X", x+2*SCALE, y+8*SCALE);
-            }
-
-
         }
     }
 }
