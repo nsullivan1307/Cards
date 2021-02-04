@@ -44,6 +44,26 @@ public class DragBox
         p.addMouseMotionListener(new PositionListener());
         p.addMouseListener(new ClickListener());
     }
+
+    public boolean inCard(Point p) {
+        // get the mouse position
+        xp = p.x;
+        yp = p.y;
+        return (xp > x && xp < x + w && yp > y && yp < y + h);
+    }
+
+    public void onMouseClicked(MouseEvent event) {
+
+    }
+
+    public void onMouseEntered(MouseEvent event) {
+
+    }
+
+    public void onMouseExited(MouseEvent event) {
+
+    }
+
     private class ClickListener implements MouseListener
     {
         // When the mouse is moved
@@ -51,22 +71,31 @@ public class DragBox
         {
             // get the mouse position
             point1 = event.getPoint();
-            xp = point1.x;
-            yp = point1.y;
-            if (xp > x && xp < x + w && yp > y && yp < y + h)
-            {
+            if (inCard(point1)) {
                 sel = true;
-                xRel = xp-x;
-                yRel = yp-y;
+                xRel = point1.x-x;
+                yRel = point1.y-y;
             }
         }
-        public void mouseClicked(MouseEvent event) {}
+        public void mouseClicked(MouseEvent event) {
+            if (inCard(event.getPoint())){
+                onMouseClicked(event);
+            }
+        }
         public void mouseReleased(MouseEvent event)
         {
             sel = false;
         }
-        public void mouseEntered(MouseEvent event) {}
-        public void mouseExited(MouseEvent event) {}
+        public void mouseEntered(MouseEvent event) {
+            if (inCard(event.getPoint())){
+                onMouseEntered(event);
+            }
+        }
+        public void mouseExited(MouseEvent event) {
+            if (inCard(event.getPoint())){
+                onMouseExited(event);
+            }
+        }
     }
     // This is the mouse motion listener
     private class PositionListener implements MouseMotionListener

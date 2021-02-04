@@ -28,7 +28,7 @@ public class JDeck
         x = xp;
         y = yp;
         // The width and height are set, according to a scaling size
-        w = 37*CardTable.SCALE;
+        w = 36*CardTable.SCALE;
         h = 274*CardTable.SCALE/5;
         // d1 is created
         d1 = new Deck();
@@ -52,7 +52,7 @@ public class JDeck
         page.fillRect(x, y, w, h);
         // And then a black back of the card is drawn, with the position scaled
         page.setColor(Color.black);
-        page.drawString(cardPic, x-6*CardTable.SCALE/5, y+48*CardTable.SCALE);
+        page.drawString(cardPic, x-8*CardTable.SCALE/5, y+48*CardTable.SCALE);
     }
     // This is the clickListener, added to the JPanel earlier
     private class clickListener implements MouseListener
