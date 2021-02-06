@@ -85,7 +85,6 @@ public class CardTable extends JPanel
         jCards[numCards] = new JCard(ca1, (70+numCards*8)*SCALE, 25*SCALE, this);
         // The number of cards increases by 1;
         numCards++;
-        // if the sum is equal to 21:
         // finally, repaints the JPanel again
         repaint();
     }
@@ -103,14 +102,6 @@ public class CardTable extends JPanel
         {
             jCards[i].draw(page);
         }
-        // Sets the graphics font to the font used for the message
-        //page.setFont(f1);
-        // Sets the color to black, because the colour might have changed, in drawing the cards
-        //page.setColor(Color.black);
-        // creates the point display
-        //message = "Points: " + sum;
-        // Draws the point display at the top of the screen with scaled positions
-        //page.drawString(message, 40*SCALE, 20*SCALE);
     }
 
     public CardFrame getFrame()

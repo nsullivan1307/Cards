@@ -15,12 +15,11 @@ public class JDeck
     private final int y;
     private final int w;
     private final int h;
-    // This will be the string with the character of the back of a card
-    private final String cardPic;
     // Deck that the JDeck uses
-    private final Deck d1;
+    private final Deck deck;
     // The cardTable panel
-    private final CardTable p;
+    private final CardTable table;
+    private boolean clickable;
 
     public JDeck(int xp, int yp, CardTable panel)
     {
@@ -31,28 +30,31 @@ public class JDeck
         w = 36*CardTable.SCALE;
         h = 274*CardTable.SCALE/5;
         // d1 is created
-        d1 = new Deck();
-        // the string with the back of the card is created. For more details about
-        // this method, see the Card class.
-        cardPic = new StringBuilder().appendCodePoint(0x1f0a0).toString();
+        deck = Deck.makeFull();
+        deck.shuffle();
+        clickable = false;
         // This is the panel that the JDeck is put into.
         // It is used so that the mouse clicked position can be detected, within
         // the JPanel
-        p = panel;
+        table = panel;
         // This adds a MouseListener to the JPanel, which detects where and
         // how a mouse has clicked in the JPanel
-        p.addMouseListener(new clickListener());
+        table.addMouseListener(new clickListener());
+
     }
 
     public void draw(Graphics page)
     {
-        // This method draws the JDeck by drawing a white rectangle as a
-        // background for the card
-        page.setColor(Color.white);
-        page.fillRect(x, y, w, h);
-        // And then a black back of the card is drawn, with the position scaled
-        page.setColor(Color.black);
-        page.drawString(cardPic, x-8*CardTable.SCALE/5, y+48*CardTable.SCALE);
+        Card topCard = deck.peek();
+        if (topCard != null) {
+            // This method draws the JDeck by drawing a white rectangle as a
+            // background for the card
+            page.setColor(Color.white);
+            page.fillRect(x, y, w, h);
+            // And then a black back of the card is drawn, with the position scaled
+            page.setColor(Color.black);
+            page.drawString(topCard.toString(), x - 8 * CardTable.SCALE / 5, y + 48 * CardTable.SCALE);
+        }
     }
     // This is the clickListener, added to the JPanel earlier
     private class clickListener implements MouseListener
@@ -69,7 +71,11 @@ public class JDeck
             if (x < xp && xp < x + w && y < yp && yp < y + h)
             {
                 // A card is removed from the deck, and added to the JPanel
-                p.addCard(d1.removeRandomCard());
+                Card c = deck.poll();
+                if (c != null) {
+                    c.flip();
+                    table.addCard(c);
+                }
             }
         }
         // These are not needed:

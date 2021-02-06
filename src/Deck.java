@@ -1,4 +1,6 @@
+import java.util.Arrays;
 import java.util.Random;
+import java.util.ArrayDeque;
 /**
  * This begins as a full deck, but when the remove card method is called, the card
  * is removed from the array, and the number of cards is decreased
@@ -6,49 +8,67 @@ import java.util.Random;
  * @author (Nicholas Sullivan)
  * @version (Jan 2016)
  */
-public class Deck
+public class Deck extends ArrayDeque<Card>
 {
-    // A card array to represent the deck
-    private final Card[] d1;
     // a random generator
     private final Random gen;
-    // The number of cards
-    private int numCards;
 
-    public Deck()
+    public Deck(Card[] cardArray)
     {
-        // the number of cards is 52
-        numCards = 52;
-        // the deck is 52 cards in length
-        d1 = new Card[numCards];
+        super(Arrays.asList(cardArray));
+        // The random generator
+        gen = new Random();
+    }
+    public static Deck makeEmpty()
+    {
+        Card[] cards = {};
+        return new Deck(cards);
+    }
+
+    public static Deck makeFull()
+    {
+        Card[] cards = new Card[52];
+        // An array of suits and an array of values to create the cards in the deck
+        Suit[] suits = Suit.values();
+        Value[] values = Value.values();
         // for each suit and each value, create a card
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 13; j++)
             {
-                // An array of suits and an array of values to create the cards in the deck
-                Suit[] suits = Suit.values();
-                Value[] values = Value.values();
-                d1[13*i+j] = new Card(suits[i], values[j]);
+                cards[13*i+j] = new Card(suits[i], values[j]);
+                cards[13*i+j].flip();
             }
         }
-        // The random generator
-        gen = new Random();
+        return new Deck(cards);
     }
-    // This returns a card and removes this card from the deck
-    public Card removeRandomCard()
+
+    public void flipDeck()
     {
-        // generates an index for the card
-        int index = gen.nextInt(numCards);
-        // creates the card to be removed
-        // the card for remove from the deck
-        Card cardOut = d1[index];
-        // for each value in the deck after the card to be taken out,
-        // shift each value down one index
-        if (numCards - 1 - index >= 0) System.arraycopy(d1, index + 1, d1, index, numCards - 1 - index);
-        // Decreases the number of cards
-        numCards--;
-        // returns the card
-        return cardOut;
+        // Dumps cards into array
+        Card[] cards = toArray(new Card[0]);
+        int numCards = size();
+        for (int i = 0; i < numCards; i++)
+        {
+            removeLast();
+            addFirst(cards[i]);
+        }
+    }
+
+    public void shuffle()
+    {
+        // Dumps cards into array
+        Card[] cards = toArray(new Card[0]);
+        int index;
+        int numCards = size();
+        int numArray = numCards;
+        for (int i = 0; i < numCards; i++)
+        {
+            index = gen.nextInt(numArray);
+            removeLast();
+            addFirst(cards[index]);
+            numArray--;
+            if (numArray - index >= 0) System.arraycopy(cards, index + 1, cards, index, numArray - index);
+        }
     }
 }
